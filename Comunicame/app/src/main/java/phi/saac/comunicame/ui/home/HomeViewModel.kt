@@ -85,6 +85,18 @@ class HomeViewModel: ViewModel() {
         TinderContactCardModel(
             icon= R.drawable.verbo_estar_1,
             name = "ESTAR", backgroundColor = verb
+        ),
+        TinderContactCardModel(
+            icon= R.drawable.sustantivo_perro,
+            name = "PERRO", backgroundColor = noun
+        ),
+        TinderContactCardModel(
+            icon= R.drawable.cualidad_feliz,
+            name = "FELÍZ", backgroundColor = adjective
+        ),
+        TinderContactCardModel(
+            icon= R.drawable.expresion_social_buen_dia,
+            name = "BUEN DÍA", backgroundColor = socialExpression
         )
     )
     private var currentIndex = 0
