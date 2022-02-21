@@ -70,8 +70,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun bindCard(model: TinderContactModel) {
-        //_binding?.containerCardOne?.setBackgroundColor(model.cardTop.backgroundColor)
+        _binding?.icon?.setImageResource(model.cardTop.icon)
         _binding?.name?.text = "${model.cardTop.name}"
-        //_binding?.containerCardTwo?.setBackgroundColor(model.cardBottom.backgroundColor)
+        _binding?.icon?.background= resources.getDrawable(R.drawable.rounded_yellow_border, null)
     }
 }
