@@ -25,7 +25,6 @@ class HomeViewModel: ViewModel() {
         TinderContactCardModel(
             icon= R.drawable.pronombre_personal_1_1,
             name = "YO", backgroundColor = personalPronouns,
-
         ),
         TinderContactCardModel(
             icon= R.drawable.pronombre_personal_1_2,
@@ -78,6 +77,14 @@ class HomeViewModel: ViewModel() {
         TinderContactCardModel(
             icon= R.drawable.pronombre_personal_6_3,
             name = "ELLOS", backgroundColor = personalPronouns
+        ),
+        TinderContactCardModel(
+            icon= R.drawable.verbo_ser_1,
+            name = "SER", backgroundColor = verb
+        ),
+        TinderContactCardModel(
+            icon= R.drawable.verbo_estar_1,
+            name = "ESTAR", backgroundColor = verb
         )
     )
     private var currentIndex = 0

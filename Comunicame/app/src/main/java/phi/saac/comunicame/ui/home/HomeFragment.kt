@@ -72,6 +72,6 @@ class HomeFragment : Fragment() {
     private fun bindCard(model: TinderContactModel) {
         _binding?.icon?.setImageResource(model.cardTop.icon)
         _binding?.name?.text = "${model.cardTop.name}"
-        _binding?.icon?.background= resources.getDrawable(R.drawable.rounded_yellow_border, null)
+        _binding?.icon?.background= resources.getDrawable(model.cardTop.backgroundColor, null)
     }
 }
