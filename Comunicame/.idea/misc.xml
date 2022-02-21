@@ -9,7 +9,9 @@
         <entry key="app/src/main/res/drawable/gradient.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.16018518518518518" />
         <entry key="app/src/main/res/drawable/ic_menu_camera.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_store_icon.xml" value="0.15555555555555556" />
         <entry key="app/src/main/res/drawable/side_nav_bar.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/whatshot_24px.xml" value="0.1125" />
         <entry key="app/src/main/res/layout/activity_deck_scene.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_tinder_scene1.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_tinder_scene10.xml" value="0.1" />
