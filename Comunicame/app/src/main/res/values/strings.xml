@@ -1,11 +1,4 @@
 <resources>
     <string name="app_name">Comunicame</string>
-    <string name="navigation_drawer_open">Abrir Navegador drawer</string>
-    <string name="navigation_drawer_close">Cerrar Navegador drawer</string>
-    <string name="nav_header_title">Comunicame</string>
-    <string name="nav_header_subtitle">Versión alpha</string>
-    <string name="nav_header_desc">Encabezado del Navegador</string>
-    <string name="action_settings">Configuración</string>
-
     <string name="menu_home">Inicio</string>
 </resources>
