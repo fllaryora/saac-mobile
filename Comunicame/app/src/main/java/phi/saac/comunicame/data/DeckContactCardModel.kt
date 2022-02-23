@@ -1,7 +1,7 @@
-package phi.saac.comunicame.ui.scenes
+package phi.saac.comunicame.data
 import androidx.annotation.DrawableRes
 
-data class TinderContactCardModel(
+data class DeckContactCardModel(
     val name: String,
     @DrawableRes val backgroundColor: Int,
     @DrawableRes val icon: Int
