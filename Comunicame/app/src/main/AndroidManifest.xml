@@ -6,10 +6,10 @@
         <intent>
             <action android:name="android.intent.action.TTS_SERVICE" />
         </intent>
-        <!--<intent>
+        <intent>
             <action android:name="com.android.settings.TTS_SETTINGS" />
         </intent>
-        <intent>
+        <!--<intent>
             <action android:name="android.intent.action.WEB_SEARCH" />
         </intent>
         <intent>

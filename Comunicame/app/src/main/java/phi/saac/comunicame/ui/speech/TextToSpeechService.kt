@@ -3,7 +3,6 @@ import android.content.Context
 import android.speech.tts.TextToSpeech
 
 import android.os.Bundle
-import android.speech.tts.Voice
 import android.util.Log
 import java.util.*
 import java.lang.IllegalArgumentException
@@ -36,18 +35,12 @@ class TextToSpeechService(val mContext: Context):MyUtteranceProgressListener.Lis
 
     private val onInitListener = TextToSpeech.OnInitListener { status: Int ->
         //onInit
+        Log.e(TAG, "On init")
         if (TextToSpeech.SUCCESS == status) {
             mTTS.setOnUtteranceProgressListener(utteranceProgressListener)
             try {
-                val locale = mTTS.defaultVoice.locale
-                if(TTSHelper.isLanguageAvailable(locale, mTTS)){
-                    val result = mTTS.setLanguage(locale)
-                    // result = mTTS.setLanguage(Locale("es","ES"))
-                    if( (TextToSpeech.LANG_MISSING_DATA == result) or
-                        (TextToSpeech.LANG_NOT_SUPPORTED == result) ){
-                        Log.e(TAG, "Language not supported.")
-                    }
-                }
+                setHandsomeSpanish()
+                isTtsInitialized = true
             } catch (exception: Exception){
                 Log.e(TAG, "getDefaultLocale: " + exception.message)
             }
@@ -68,51 +61,29 @@ class TextToSpeechService(val mContext: Context):MyUtteranceProgressListener.Lis
         mTTS.shutdown()
     }
 
-    fun setHandsomeBritish(shouldBeBritish: Boolean) {
-        if (!shouldBeBritish) {
-            mTTS.voice = mTTS.defaultVoice
-            mTTS.setSpeechRate(2.7f)
-            return
-        }
-        val britishVoices = mutableListOf<Voice>()
-        var britishVoice: Voice? = null
-        val voices = mTTS.voices
-        for (voice in voices) {
-            if (voice.name == "en-GB-language") {
-                britishVoice = voice
-                continue
-            }
-            if (voice.locale == Locale.UK && !voice.isNetworkConnectionRequired &&
-                voice.quality >= Voice.QUALITY_VERY_HIGH) {
-                britishVoices.add(voice)
-            }
-        }
-        if (britishVoice != null) {
-            mTTS.voice = britishVoice
-            mTTS.setSpeechRate(1.0f)
-        } else {
-            if (britishVoices.size != 0) {
-                mTTS.voice = britishVoices[0] // Just set any old British voiceo
-                mTTS.setSpeechRate(1.0f)
-            }
-        }
-    }
-
     fun setHandsomeSpanish() {
         val locale = Locale("es","ES")
-        if(TTSHelper.isLanguageAvailable(locale, mTTS)){
+        //Engines : Google y samsung
+        if(TTSHelper.isLanguageAvailable(locale, mTTS)) {
             val result = mTTS.setLanguage(locale)
             if( (TextToSpeech.LANG_MISSING_DATA == result) or
                 (TextToSpeech.LANG_NOT_SUPPORTED == result) ){
                 Log.e(TAG, "Language not supported.")
+            } else{
+                Log.e(TAG, "Language IS supported.")
+                TTSHelper.setSpeechRate(1.0f, mTTS)
+                TTSHelper.setVolume(1.0f, bundle = mBundle)
+                TTSHelper.setPitch(1.0f, mTTS)
             }
+        } else{
+            Log.e(TAG, "Language not supported.")
         }
 
     }
 
     fun speak(text: String) : Boolean{
         val uuid = UUID.randomUUID().toString()
-        utteranceProgressListener.utterances.put(uuid, text)
+        utteranceProgressListener.utterances[uuid] = text
         return if (ismServiceConnectionUsable(mTTS)) {
             if (silencems > 0L) {
                 mTTS.playSilentUtterance(
@@ -149,9 +120,9 @@ class TextToSpeechService(val mContext: Context):MyUtteranceProgressListener.Lis
         }
         val fields: Array<Field> = tts.javaClass.declaredFields
         for (j in fields.indices) {
-            fields[j].setAccessible(true)
-            if ("mServiceConnection" == fields[j].getName() &&
-                "android.speech.tts.TextToSpeech\$Connection" == fields[j].getType().getName()
+            fields[j].isAccessible = true
+            if ("mServiceConnection" == fields[j].name &&
+                "android.speech.tts.TextToSpeech\$Connection" == fields[j].type.name
             ) {
                 try {
                     if (fields[j].get(tts) == null) {

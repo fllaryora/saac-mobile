@@ -1,9 +1,14 @@
 package phi.saac.comunicame.ui.home
 
+import android.content.Intent
 import android.os.Bundle
+import android.speech.tts.TextToSpeech.Engine
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.TransitionAdapter
 import androidx.fragment.app.Fragment
@@ -18,7 +23,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
-    private lateinit var textService :TextToSpeechService
+    private var textService :TextToSpeechService? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -29,8 +34,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        textService = TextToSpeechService(requireContext())
-        textService.setHandsomeSpanish()
+
         homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
 
@@ -63,16 +67,60 @@ class HomeFragment : Fragment() {
         _binding?.unlikeFloating?.setOnClickListener {
             _binding?.motionLayout?.transitionToState(R.id.unlike)
         }
-
+        checkTextToSpeechStatus()
         _binding?.superLikeFloating?.setOnClickListener {
-            textService.speak("Hola, buenos días")
+            if(textService?.isTtsInitialized == true) {
+                textService?.speak("Hola, buenos días")
+            }
+
         }
+
         return root
     }
 
+    private fun checkTextToSpeechStatus() {
+        registerForActivityResult(StartActivityForResult())
+        { result: ActivityResult ->
+            if (Engine.CHECK_VOICE_DATA_PASS == result.resultCode) {
+                // success, create the TTS instance
+                initializeTextToSpeech()
+            } else {
+                // missing data, install it
+                installTextToSpeechLibrary()
+            }
+
+
+        }.launch(Intent(Engine.ACTION_CHECK_TTS_DATA))
+    }
+    private fun installTextToSpeechLibrary() {
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Engine.CHECK_VOICE_DATA_PASS) {
+                initializeTextToSpeech()
+            }
+
+        }.launch(Intent(Engine.ACTION_INSTALL_TTS_DATA))
+    }
+
+    private fun initializeTextToSpeech() {
+        textService = TextToSpeechService(requireContext())
+    }
+
+    override fun onStart() {
+        super.onStart()
+    }
+    override fun onPause() {
+        super.onPause()
+        if(textService!=null) {
+            textService?.onPause()
+        }
+
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        if(textService!=null) {
+            textService?.onDetach()
+        }
     }
 
     private fun bindCard(model: DeckContactModel) {
