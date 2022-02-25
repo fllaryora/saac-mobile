@@ -41,8 +41,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        homeViewModel
-            .modelStream
+        homeViewModel.modelStream
             .observe(this, Observer {
                 bindCard(it)
             })
@@ -52,8 +51,8 @@ class HomeFragment : Fragment() {
                 when (currentId) {
                     R.id.offScreenUnlike,
                     R.id.offScreenLike -> {
-                        motionLayout.progress = 0f
-                        motionLayout.setTransition(R.id.start, R.id.detail)
+                        motionLayout.progress = 0.0f
+                        motionLayout.setTransition(R.id.start, R.id.start)
                         homeViewModel.swipe()
                     }
                 }
@@ -124,8 +123,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun bindCard(model: DeckContactModel) {
-        _binding?.icon?.setImageResource(model.cardTop.icon)
-        _binding?.name?.text = "${model.cardTop.name}"
-        _binding?.icon?.background= resources.getDrawable(model.cardTop.backgroundColor, null)
+        _binding?.iconCardOne?.setImageResource(model.cardTop.icon)
+        _binding?.iconCardOne?.background= resources.getDrawable(model.cardTop.backgroundColor, null)
+        _binding?.nameOne?.text = "${model.cardTop.name}"
+
+        //_binding?.iconCardTwo?.setImageResource(model.cardBottom.icon)
+        //_binding?.iconCardTwo?.background= resources.getDrawable(model.cardBottom.backgroundColor, null)
+        //_binding?.nameTwo?.text = "${model.cardBottom.name}"
+
     }
 }

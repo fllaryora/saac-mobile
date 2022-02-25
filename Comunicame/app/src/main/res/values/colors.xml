@@ -7,6 +7,7 @@
     <color name="colorPrimaryDark">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="mate">#D3D3D3</color>
     <color name="background">#E1E1E1</color>
     <color name="gray">#5A5A5A</color>
 </resources>

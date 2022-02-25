@@ -2,33 +2,7 @@
 <MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Transition
-        app:constraintSetEnd="@+id/detail"
-        app:constraintSetStart="@id/start"
-        app:duration="1000">
-        <OnClick
-            app:clickAction="toggle"
-            app:targetId="@id/detailButton" />
-
-        <KeyFrameSet>
-            <KeyAttribute
-                android:alpha="0"
-                app:framePosition="70"
-                app:motionTarget="@id/backButton" />
-        </KeyFrameSet>
-    </Transition>
-
-    <Transition
-        app:constraintSetEnd="@+id/start"
-        app:constraintSetStart="@id/detail"
-        app:duration="1000">
-        <OnClick
-            app:clickAction="toggle"
-            app:targetId="@id/backButton" />
-    </Transition>
-
-    <Transition
-        android:id="@+id/startToLeft3"
+    <Transition android:id="@+id/startToLeft3"
         app:constraintSetEnd="@+id/unlike"
         app:constraintSetStart="@+id/start">
 
@@ -51,14 +25,12 @@
 
     </Transition>
 
-    <Transition
-        app:autoTransition="animateToEnd"
+    <Transition app:autoTransition="animateToEnd"
         app:constraintSetEnd="@+id/offScreenUnlike"
         app:constraintSetStart="@+id/unlike"
         app:duration="150" />
 
-    <Transition
-        android:id="@+id/startToRight3"
+    <Transition android:id="@+id/startToRight3"
         app:constraintSetEnd="@+id/like"
         app:constraintSetStart="@+id/start">
 
@@ -81,26 +53,10 @@
 
     </Transition>
 
-    <Transition
-        app:autoTransition="animateToEnd"
+    <Transition app:autoTransition="animateToEnd"
         app:constraintSetEnd="@+id/offScreenLike"
         app:constraintSetStart="@+id/like"
         app:duration="150" />
-
-    <Transition
-        android:id="@+id/collapseCard"
-        app:constraintSetEnd="@+id/collapseCards"
-        app:constraintSetStart="@+id/start">
-
-        <OnSwipe
-            app:dragDirection="dragDown"
-            app:onTouchUp="autoComplete"
-            app:touchAnchorId="@id/cardOne"
-            app:touchAnchorSide="bottom"
-            app:touchRegionId="@id/cardOne" />
-
-    </Transition>
-
 
     <ConstraintSet android:id="@+id/start">
         <Constraint android:id="@id/cardOne">
@@ -116,7 +72,6 @@
                 app:customDimension="24dp" />
         </Constraint>
 
-
         <Constraint android:id="@id/cardTwo">
 
             <Layout
@@ -131,22 +86,6 @@
                 android:scaleX="0.90"
                 android:scaleY="0.90" />
 
-        </Constraint>
-
-        <Constraint android:id="@id/detailButton">
-            <Layout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                app:layout_constraintBottom_toBottomOf="@id/cardOne"
-                app:layout_constraintEnd_toEndOf="@id/cardOne"
-                app:layout_constraintStart_toStartOf="@id/cardOne" />
-        </Constraint>
-
-        <Constraint android:id="@id/backButton">
-            <PropertySet
-                android:alpha="0"
-                android:visibility="gone" />
         </Constraint>
 
     </ConstraintSet>
@@ -243,84 +182,4 @@
 
     </ConstraintSet>
 
-    <ConstraintSet android:id="@+id/detail">
-
-        <Constraint android:id="@id/cardOne">
-            <Layout
-                android:layout_width="0dp"
-                android:layout_height="560dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <CustomAttribute
-                app:attributeName="radius"
-                app:customDimension="0dp" />
-        </Constraint>
-
-        <Constraint android:id="@id/cardTwo">
-            <PropertySet android:alpha="0" />
-        </Constraint>
-
-        <Constraint android:id="@id/detailButton">
-            <Layout
-                android:layout_height="0dp"
-                android:layout_marginBottom="0dp"
-                app:layout_constraintBottom_toBottomOf="@id/cardOne"
-                app:layout_constraintEnd_toEndOf="@id/cardOne"
-                app:layout_constraintStart_toStartOf="@id/cardOne" />
-        </Constraint>
-
-        <Constraint android:id="@id/name">
-            <Layout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="@id/cardOne"
-                app:layout_constraintEnd_toEndOf="@id/cardOne"
-                app:layout_constraintStart_toStartOf="@id/cardOne" />
-        </Constraint>
-
-        <Constraint android:id="@id/backButton">
-            <PropertySet
-                android:alpha="1"
-                android:visibility="visible" />
-        </Constraint>
-
-
-    </ConstraintSet>
-
-    <ConstraintSet android:id="@+id/collapseCards">
-
-        <Constraint android:id="@id/cardOne">
-
-            <Layout
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-            <Transform
-                android:rotationX="-35"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:translationY="100dp" />
-        </Constraint>
-
-        <Constraint android:id="@id/cardTwo">
-
-            <Layout
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <Transform
-                android:rotationX="-35"
-                android:scaleX="0.5"
-                android:scaleY="0.5" />
-        </Constraint>
-
-    </ConstraintSet>
 </MotionScene>
